@@ -4,9 +4,9 @@ import { View, Text, Image, FlatList, Dimensions, StyleSheet, TouchableOpacity }
 const { width } = Dimensions.get('window');
 
 const data = [
-    { id: '1', title: 'Title 1', image: 'https://images.unsplash.com/photo-1636761358783-209512dccd98?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fG1lY2hhbmljfGVufDB8fDB8fHww' },
-    { id: '2', title: 'Title 2', image: 'https://images.unsplash.com/photo-1636761358757-0a616eb9e17e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fG1lY2hhbmljfGVufDB8fDB8fHww' },
-    { id: '3', title: 'Title 3', image: 'https://images.unsplash.com/photo-1599256630445-67b5772b1204?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fG1lY2hhbmljfGVufDB8fDB8fHww' },
+    { id: '1', image: 'https://images.unsplash.com/photo-1636761358783-209512dccd98?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fG1lY2hhbmljfGVufDB8fDB8fHww' },
+    { id: '2', image: 'https://images.unsplash.com/photo-1636761358757-0a616eb9e17e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fG1lY2hhbmljfGVufDB8fDB8fHww' },
+    { id: '3', image: 'https://images.unsplash.com/photo-1599256630445-67b5772b1204?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fG1lY2hhbmljfGVufDB8fDB8fHww' },
 ];
 
 const Carousel = () => {
@@ -35,7 +35,7 @@ const Carousel = () => {
                 renderItem={({ item }) => (
                     <View style={styles.item}>
                         <Image source={{ uri: item.image }} style={styles.image} />
-                        <Text style={styles.title}>{item.title}</Text>
+                        {/* <Text style={styles.title}>{item.title}</Text> */}
                     </View>
                 )}
                 horizontal
@@ -60,38 +60,33 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 20,
     },
-    item: {
-        width,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     image: {
-        width: width * 0.9,  // Adjust width as needed
-        height: 200,
-        resizeMode: 'cover',  // Ensures the image covers the space and crops if needed
-        borderRadius: 10,
-        marginHorizontal: 10,  // Adds spacing between images
+        width: width * 0.9,  // 90% of the screen width
+        height: 200,         // Fixed height for uniformity
+        resizeMode:'cover',  // Ensures the image covers the space and crops the excess
+        borderRadius: 0,     // Rounded corners for aesthetics
+        left:15,
     },
-    title: {
-        marginTop: 10,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',  // Center-align the title text
-    },
+    // title: {
+    //     marginTop: 10,
+    //     fontSize: 18,
+    //     fontWeight: 'bold',
+    //     textAlign: 'center',
+    // },
     tabContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop: 10,
     },
     tab: {
-        width: 10,
-        height: 10,
+        width: 30,
+        height: 3,
         borderRadius: 5,
-        backgroundColor: '#ddd',
+        backgroundColor: '#ACA7A6',
         marginHorizontal: 5,
     },
     tabActive: {
-        backgroundColor: '#FF6347', // Or any color for the active tab
+        backgroundColor: '#FF3131',  // Active tab indicator color
     },
 });
 

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+import { Picker } from "@react-native-picker/picker"; // Import Picker component
 
 const Services: React.FC = () => {
   const navigation = useNavigation(); // Get navigation prop
+  const [selectedService, setSelectedService] = useState("service1"); // State for selected service
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F5F5F5" }}>
@@ -15,10 +17,28 @@ const Services: React.FC = () => {
         </TouchableOpacity>
 
         {/* Heading */}
-        <Text style={styles.heading}>Puncture Services</Text>
+        <Text style={styles.heading}>Choose Services</Text>
 
         {/* Form */}
         <View style={styles.form}>
+          {/* Service Selection Dropdown */}
+          <Text style={styles.label}>Select Service:</Text>
+          <View style={styles.dropdownContainer}>
+            <Picker
+              selectedValue={selectedService}
+              onValueChange={(itemValue) => setSelectedService(itemValue)}
+              style={styles.dropdown}
+            >
+              <Picker.Item label="Service 1" value="service1" />
+              <Picker.Item label="Service 2" value="service2" />
+              <Picker.Item label="Service 3" value="service3" />
+              <Picker.Item label="Service 4" value="service4" />
+              <Picker.Item label="Service 5" value="service5" />
+              <Picker.Item label="Service 6" value="service6" />
+              <Picker.Item label="Service 7" value="service7" />
+            </Picker>
+          </View>
+
           <Text style={styles.label}>Vehicle Type:</Text>
           <TextInput style={styles.input} placeholder="Enter vehicle type" />
 
@@ -46,19 +66,18 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 20,
     padding: 10,
-    backgroundColor: '#FF6347',
     borderRadius: 8,
-    alignItems: 'center',
   },
   backButtonText: {
-    color: '#FFF',
+    color: '#000',
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: 20,
   },
   heading: {
     fontSize: 24,
     fontWeight: "700",
     marginBottom: 20,
+    padding: 20,
   },
   form: {
     backgroundColor: "#FFF",
@@ -66,6 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     shadowColor: "#D3D3D3",
     elevation: 3,
+    paddingBottom:120,
   },
   label: {
     fontSize: 16,
@@ -81,7 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: "#FF6347",
+    backgroundColor: "#FF3131",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
@@ -90,6 +110,17 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontWeight: "600",
     fontSize: 16,
+  },
+  dropdownContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    marginBottom: 20,
+    overflow: "hidden",
+  },
+  dropdown: {
+    height: 50,
+    width: "100%",
   },
 });
 

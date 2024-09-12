@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Entypo } from '@expo/vector-icons'; // Import Entypo icon set for cross icon
 
-const Menu: React.FC = () => {
+const Menu: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const router = useRouter();
 
   return (
@@ -25,7 +25,8 @@ const Menu: React.FC = () => {
       </TouchableOpacity>
 
       {/* Close Button */}
-      
+      <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     paddingTop: 100,
     paddingLeft: 30,
-    paddingRight: 20, // Add right padding for close button alignment
+    paddingRight: 20,
   },
   menuItem: {
     marginBottom: 20,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    bottom: 30, // Adjusted value to move the button further down
+    top: 20,
     right: 20,
     zIndex: 1000,
   },

@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     color: "#888",
   },
   buyNowButton: {
-    backgroundColor: "#FF6347",
+    backgroundColor: "#ff3131",
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",

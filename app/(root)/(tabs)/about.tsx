@@ -116,9 +116,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+    paddingBottom:80,
   },
   header: {
-    backgroundColor: '#FF6347',
+    backgroundColor: '#ff3131',
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 15,
@@ -154,14 +155,14 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    color: '#555',
+    color: '#ff3131',
     lineHeight: 24,
     textAlign: 'justify',
   },
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FF6347',
+    color: '#FF3131',
     marginBottom: 15,
   },
   text: {
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
   },
   valueIcon: {
     marginRight: 10,
+    color: '#FF3131',
   },
   valueText: {
     fontSize: 16,
@@ -205,7 +207,7 @@ const styles = StyleSheet.create({
     color: '#777',
   },
   contactButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: '#ff3131',
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: 'center',

@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 20,
     backgroundColor: "#F5F5F5",
+    paddingBottom:120,
   },
   backButton: {
     marginBottom: 20,
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   confirmButton: {
-    backgroundColor: "#FF6347",
+    backgroundColor: "#ff3131",
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",

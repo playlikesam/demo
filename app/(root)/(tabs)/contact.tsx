@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+    paddingBottom:80,
   },
   content: {
     padding: 20,
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     minHeight: 100,
   },
   button: {
-    backgroundColor: '#FF6347',
+    backgroundColor: '#ff3131',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',

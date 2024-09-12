@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Image, FlatList, ActivityIndicator, ScrollView, Animated } from "react-native";
+import { Text, View, TouchableOpacity, Image, FlatList, ActivityIndicator, ScrollView, Animated, TextComponent } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import { useUser, useAuth } from "@clerk/clerk-expo";
@@ -15,6 +15,12 @@ import { Ride } from "@/types/type";
 
 import Carousel from './Carousel';
 import Menu from './menu';
+import AdvertisementStrip from "./advertisementStrip";
+import Bell from "./subscription";
+import Subscription from "./subscription";
+import Referrals from "./referrals";
+import VendorList from './VendorList';
+import VendorDetail from './VendorDetail';
 
 const Home: React.FC = () => {
   const { user } = useUser();
@@ -78,7 +84,7 @@ const Home: React.FC = () => {
   const toggleMenu = () => {
     if (menuVisible) {
       Animated.timing(menuAnimation, {
-        toValue: -250,
+        toValue: 250,
         duration: 300,
         useNativeDriver: true,
       }).start(() => setMenuVisible(false));
@@ -94,14 +100,44 @@ const Home: React.FC = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#F5F5F5", flex: 1 }}>
-      {/* Button to Toggle Menu */}
-      <View style={{ flexDirection: "row", justifyContent: "flex-start", padding: 20 }}>
+      
+
+      {/* Logo at the top left */}
+      <View style={{ flexDirection: "row", justifyContent: "flex-start", padding: 0 }}>
+        <View
+      style={{
+        padding: 10, // Add padding around the image
+        alignItems: 'center', // Center the image horizontally
+        justifyContent: 'center', // Center the image vertically
+      }}
+    >
+      <Image
+        source={require("@/assets/icons/logo.png")}
+        style={{
+          width: 50,
+          height: 50,
+          resizeMode: 'contain', // Ensure the logo maintains its aspect ratio
+        }}
+      />
+    </View>
+
+        {/* Advertisement Strip */}
+        <AdvertisementStrip />
+
+        {/* Bell Icon */}
+        <TouchableOpacity onPress={() => router.push("/notifications")} style={{ position: "absolute", top: 0, right: 65 }}>
+          <Image  source={icons.bell} style={{ width: 49, height: 49, tintColor: "#FF3131", position: "absolute", top: 10, right: 10 }} />
+        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={toggleMenu}
           style={{
-            backgroundColor: "#FF6347",
-            padding: 10,
+            backgroundColor: "#FF3131",
+            padding: 12,
             borderRadius: 50,
+            position: "absolute",
+            right: 20,
+            top:10,
           }}
         >
           <Image source={icons.menu} style={{ width: 24, height: 24, tintColor: "#FFF" }} />
@@ -113,7 +149,7 @@ const Home: React.FC = () => {
           style={{
             position: "absolute",
             top: 0,
-            left: 0,
+            left: 150,
             width: 250,
             height: "100%",
             backgroundColor: "#FFF",
@@ -130,10 +166,10 @@ const Home: React.FC = () => {
             onPress={toggleMenu}
             style={{
               position: "absolute",
-              top: 20,
+              top: 35,
               right: 20,
-              backgroundColor: "#FF6347",
-              padding: 10,
+              backgroundColor: "#FF3131",
+              padding: 13,
               borderRadius: 50,
             }}
           >
@@ -178,146 +214,178 @@ const Home: React.FC = () => {
               </TouchableOpacity>
             </View>
 
-            <GoogleTextInput
+            {/* <GoogleTextInput
               icon={icons.search}
               containerStyle={{ backgroundColor: "#FFF", shadowColor: "#D3D3D3", elevation: 3 }}
               handlePress={handleDestinationPress}
-            />
+            /> */}
 
-            <Carousel>
-              <View style={{ width: "100%", height: 200 }}>
-                <Image source={images.onboarding1} style={{ width: "100%", height: "100%" }} />
-              </View>
-              <View style={{ width: "100%", height: 200 }}>
-                <Image source={images.onboarding2} style={{ width: "100%", height: "100%" }} />
-              </View>
-              <View style={{ width: "100%", height: 200 }}>
-                <Image source={images.onboarding3} style={{ width: "100%", height: "100%" }} />
-              </View>
-            </Carousel>
+            {/* Carousel Section */}
+            <View style={{right:15}}>
+              <Carousel />
+            </View>
 
             {/* Map Section */}
-            <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20, marginBottom: 10 }}>
+            {/* <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20, marginBottom: 10 }}>
               Your current location
             </Text>
             <View style={{ height: 300, backgroundColor: "transparent" }}>
               <Map />
-            </View>
+            </View> */}
 
             {/* Services Section */}
-            <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20, marginBottom: 10 }}>Our Services</Text>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-              {[...Array(6)].map((_, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={navigateToServices}
-                  style={{
-                    width: "48%",
-                    padding: 16,
-                    marginBottom: 16,
-                    backgroundColor: "#FFF",
-                    borderRadius: 8,
-                    shadowColor: "#D3D3D3",
-                    elevation: 3,
-                    alignItems: "center",
-                  }}
-                >
-                  <Image source={icons[`s${index + 1}`]} style={{ width: 48, height: 48, marginBottom: 8 }} />
-                  <Text style={{ fontSize: 14, color: "#888", textAlign: "center" }}>
-                    Description of Service {index + 1}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+<View>
+  <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20, marginBottom: 10 }}>Our Services</Text>
+
+  {/* Main Services - 3x3 Grid */}
+  <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+    {[{ name: "Oil Change", icon: icons.s1 },
+      { name: "Brake Repair", icon: icons.s2 },
+      { name: "Tire Replacement", icon: icons.s3 },
+      { name: "Battery Check", icon: icons.s4 },
+      { name: "Engine Diagnosis", icon: icons.s5 },
+      { name: "Wheel Alignment", icon: icons.s6 },
+      { name: "Suspension Repair", icon: icons.s7 },
+      { name: "Air Conditioning", icon: icons.s8 },
+      { name: "Transmission Repair", icon: icons.s9 }
+    ].map((service, index) => (
+      <TouchableOpacity
+        key={index}
+        onPress={navigateToServices}
+        style={{
+          width: "30%", // Adjusted width to fit 3 items per row
+          padding: 10,
+          marginBottom: 16,
+          backgroundColor: "#FFF",
+          borderRadius: 8,
+          shadowColor: "#D3D3D3",
+          elevation: 2,
+          alignItems: "center",
+        }}
+      >
+        <Image source={service.icon} style={{ width: 36, height: 36, marginBottom: 6 }} />
+        <Text style={{ fontSize: 12, color: "#888", textAlign: "center" }}>
+          {service.name}
+        </Text>
+      </TouchableOpacity>
+    ))}
+  </View>
+
+  {/* Divider Line */}
+  <View style={{
+    height: 1,
+    backgroundColor: "#D3D3D3",
+    marginVertical: 20
+  }} />
+
+  {/* Modification Services Subsection */}
+  <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 10 }}>Modification Services</Text>
+  <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+    {[{ name: "Custom Exhaust", icon: icons.s10 },
+      { name: "Body Kits", icon: icons.s11 },
+      { name: "Performance Tuning", icon: icons.s12 },
+      { name: "Spoilers", icon: icons.s13 },
+    ].map((service, index) => (
+      <TouchableOpacity
+        key={index}
+        onPress={navigateToServices}
+        style={{
+          width: "30%", // Adjusted width for the sub-section too
+          padding: 10,
+          marginBottom: 16,
+          backgroundColor: "#FFF",
+          borderRadius: 8,
+          shadowColor: "#D3D3D3",
+          elevation: 2,
+          alignItems: "center",
+        }}
+      >
+        <Image source={service.icon} style={{ width: 36, height: 36, marginBottom: 6 }} />
+        <Text style={{ fontSize: 12, color: "#888", textAlign: "center" }}>
+          {service.name}
+        </Text>
+      </TouchableOpacity>
+    ))}
+  </View>
+</View>
+
+
+            {/* Subscription card */}
+            <View>
+              <Subscription/>
             </View>
-
-            {/* List of Products Section */}
-            <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20, marginBottom: 10 }}>
-              Accessory Parts
-            </Text>
-            <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-              <View style={{ marginBottom: 20 }}>
-                {/* Product Item 1 */}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    padding: 16,
-                    marginBottom: 16,
-                    backgroundColor: "#FFF",
-                    borderRadius: 8,
-                    shadowColor: "#D3D3D3",
-                    elevation: 3,
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Image source={images.tyres} style={{ width: 96, height: 96, marginRight: 16 }} resizeMode="cover" />
-                  <View style={{ flex: 1 }}>
-                    <Text id="1" style={{ fontSize: 16, fontWeight: "700" }}>Tyres</Text>
-                    <Text style={{ fontSize: 14, color: "#888" }}>Best quality tyres for your car</Text>
-                    <Text style={{ fontSize: 16, fontWeight: "600", marginTop: 4 }}>₹5000</Text>
-                  </View>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: "#FF6347",
-                      paddingVertical: 8,
-                      paddingHorizontal: 12,
-                      borderRadius: 4,
-                    }}onPress={handleAddToCart}
-                  >
-                    <Text style={{ color: "#FFF", fontWeight: "600" }}>Add to Cart</Text>
-                  </TouchableOpacity>
-                </View>
-
-                {/* Product Item 2 */}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    padding: 16,
-                    marginBottom: 16,
-                    backgroundColor: "#FFF",
-                    borderRadius: 8,
-                    shadowColor: "#D3D3D3",
-                    elevation: 3,
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Image source={images.battery} style={{ width: 96, height: 96, marginRight: 16 }} resizeMode="cover" />
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 16, fontWeight: "700" }}>Battery</Text>
-                    <Text style={{ fontSize: 14, color: "#888" }}>Long-lasting batteries for your vehicle</Text>
-                    <Text style={{ fontSize: 16, fontWeight: "600", marginTop: 4 }}>₹3000</Text>
-                  </View>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: "#FF6347",
-                      paddingVertical: 8,
-                      paddingHorizontal: 12,
-                      borderRadius: 4,
-                    }}onPress={handleAddToCart}
-                  >
-                    <Text style={{ color: "#FFF", fontWeight: "600" }}>Add to Cart</Text>
-                  </TouchableOpacity>
-                </View>
+<ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 24 }}>
+  
+        {/* Product Section */}
+        <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 16 }}>
+          Accessories & Products
+        </Text>
+        <View style={{ flexDirection: "column" }}>
+          {/* First Product */}
+          <TouchableOpacity onPress={handleAddToCart}>
+            <View style={{ flexDirection: "row", padding: 16, marginBottom: 16, backgroundColor: "#f9f9f9", borderRadius: 8, elevation:2 }}>
+              <Image source={images.engine_oil} style={{ width: 80, height: 80 }} />
+              <View style={{ flex: 1, marginLeft: 10 }}>
+              <Text style={{ fontSize: 16 }}>Engine Oils</Text>
+              <Text style={{ fontSize: 12, color: "#888", marginTop: 4 }}>Vj0v5UqBQWY2ABJPIDMmSYJCEG8LMxLsOROinqFCqeoM6vCdGtRbma7MfXuRW1NvJHC6smC2AVRZRoP69T14yMmZ1HmFNLz2Zyi</Text>
               </View>
+            </View>
+          </TouchableOpacity>
+          {/* Second Product */}
+          <TouchableOpacity onPress={handleAddToCart}>
+            <View style={{ flexDirection: "row", padding: 16, marginBottom: 16, backgroundColor: "#f9f9f9", borderRadius: 8, elevation:2 }}>
+              <Image source={images.battery} style={{ width: 80, height: 80 }} />
+              <View style={{ flex: 1, marginLeft: 10 }}>
+              <Text style={{ fontSize: 16 }}>Car Battery</Text>
+              <Text style={{ fontSize: 12, color: "#888", marginTop: 4 }}>Vj0v5UqBQWY2ABJPIDMmSYJCEG8LMxLsOROinqFCqeoM6vCdGtRbma7MfXuRW1NvJHC6smC2AVRZRoP69T14yMmZ1HmFNLz2Zyi</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-              {/* Add Vendor Section */}
-              <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20, marginBottom: 10 }}>
-                Available Vendors
-              </Text>
-              <TouchableOpacity
-                onPress={() => router.push("/(root)/vendor")}
-                style={{
-                  backgroundColor: "#FF6347",
-                  paddingVertical: 12,
-                  paddingHorizontal: 24,
-                  borderRadius: 8,
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ color: "#FFF", fontWeight: "600" }}>View Vendors</Text>
-              </TouchableOpacity>
-            </ScrollView>
+        {/* top rated vendors */}
+        <View>
+          <VendorList/>
+        </View>
+
+        {/* Vendor Section */}
+        <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 16 }}>
+          Vendors Near Me
+        </Text>
+        <View style={{ flexDirection: "column" }}>
+          {[...Array(4)].map((_, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                flexDirection: "row",
+                padding: 16,
+                marginBottom: 16,
+                backgroundColor: "#FFF",
+                borderRadius: 8,
+                shadowColor: "#D3D3D3",
+                shadowOpacity: 0.3,
+                shadowRadius: 5,
+                elevation: 3,
+              }}
+              onPress={() => router.push(`/vendor`)} // Navigate to detailed vendor page
+            >
+              <Image source={icons.store} style={{ width: 48, height: 48, marginRight: 16 }} />
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 16, fontWeight: "600" }}>Vendor {index + 1}</Text>
+                <Text style={{ fontSize: 12, color: "#888", marginTop: 4 }}>Vendor description here...</Text>
+                <Text style={{ fontSize: 12, color: index % 2 === 0 ? "green" : "red", marginTop: 4 }}>
+                  {index % 2 === 0 ? "Available" : "Unavailable"}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Referrals */}
+        <View>
+          <Referrals/>
+        </View>
+      </ScrollView>
           </>
         }
       />
