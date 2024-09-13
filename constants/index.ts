@@ -58,6 +58,7 @@ import engine_oil from "@/assets/images/engine_oil.jpeg";
 import image1 from "@/assets/images/image1.jpg";
 import image2 from "@/assets/images/image2.jpg";
 import image3 from "@/assets/images/image3.jpg";
+import m1 from "@/assets/images/m1.jpg";
 
 
 export const images = {
@@ -75,6 +76,7 @@ export const images = {
   image1,
   image2,
   image3,
+  m1,
 };
 
 export const icons = {

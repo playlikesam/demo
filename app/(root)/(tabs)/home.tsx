@@ -348,39 +348,6 @@ const Home: React.FC = () => {
           <VendorList/>
         </View>
 
-        {/* Vendor Section */}
-        <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 16 }}>
-          Vendors Near Me
-        </Text>
-        <View style={{ flexDirection: "column" }}>
-          {[...Array(4)].map((_, index) => (
-            <TouchableOpacity
-              key={index}
-              style={{
-                flexDirection: "row",
-                padding: 16,
-                marginBottom: 16,
-                backgroundColor: "#FFF",
-                borderRadius: 8,
-                shadowColor: "#D3D3D3",
-                shadowOpacity: 0.3,
-                shadowRadius: 5,
-                elevation: 3,
-              }}
-              onPress={() => router.push(`/vendor`)} // Navigate to detailed vendor page
-            >
-              <Image source={icons.store} style={{ width: 48, height: 48, marginRight: 16 }} />
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 16, fontWeight: "600" }}>Vendor {index + 1}</Text>
-                <Text style={{ fontSize: 12, color: "#888", marginTop: 4 }}>Vendor description here...</Text>
-                <Text style={{ fontSize: 12, color: index % 2 === 0 ? "green" : "red", marginTop: 4 }}>
-                  {index % 2 === 0 ? "Available" : "Unavailable"}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-
         {/* Referrals */}
         <View>
           <Referrals/>
@@ -392,5 +359,4 @@ const Home: React.FC = () => {
     </SafeAreaView>
   );
 };
-
 export default Home;
