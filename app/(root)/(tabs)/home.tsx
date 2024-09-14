@@ -21,6 +21,7 @@ import Subscription from "./subscription";
 import Referrals from "./referrals";
 import VendorList from './VendorList';
 import VendorDetail from './VendorDetail';
+import Slider from "./slider";
 
 const Home: React.FC = () => {
   const { user } = useUser();
@@ -30,6 +31,8 @@ const Home: React.FC = () => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
   const [menuAnimation] = useState(new Animated.Value(-250)); // Menu hidden initially
   const router = useRouter();
+  const servicingIconUrl = 'https://cdn-icons-png.flaticon.com/128/3631/3631163.png';
+const partsIconUrl = 'https://cdn-icons-png.flaticon.com/128/9759/9759984.png';
 
   const {
     data: recentRides,
@@ -75,6 +78,14 @@ const Home: React.FC = () => {
 
   const navigateToServices = () => {
     router.push("/services");
+  };
+
+  const navigateToServicing = () => {
+    router.push("/servicing");
+  };
+  
+  const navigateToParts = () => {
+    router.push("/parts");
   };
 
   const handleAddToCart = () => {
@@ -236,40 +247,52 @@ const Home: React.FC = () => {
             {/* Services Section */}
 <View>
   <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20, marginBottom: 10 }}>Our Services</Text>
+  {/* Buttons Section */}
+<View style={{ flexDirection: "row", justifyContent: "center"}}>
+  {/* Servicing Button */}
+  <TouchableOpacity
+    onPress={navigateToServicing}
+    style={{
+      width: '45%',
+      backgroundColor: '#fff',
+      padding: 30,
+      marginRight:5,
+      borderRadius: 8,
+      elevation:1,
+      flexDirection: 'column',  // Changed from row to column
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <Image
+      source={{ uri: servicingIconUrl }}
+      style={{ width: 50, height: 50, marginBottom: 10 }}  // Added marginBottom to space between icon and text
+    />
+    <Text style={{ fontSize: 16, color: '#000', fontWeight: '600' }}>Servicing</Text>
+  </TouchableOpacity>
 
-  {/* Main Services - 3x3 Grid */}
-  <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-    {[{ name: "Oil Change", icon: icons.s1 },
-      { name: "Brake Repair", icon: icons.s2 },
-      { name: "Tire Replacement", icon: icons.s3 },
-      { name: "Battery Check", icon: icons.s4 },
-      { name: "Engine Diagnosis", icon: icons.s5 },
-      { name: "Wheel Alignment", icon: icons.s6 },
-      { name: "Suspension Repair", icon: icons.s7 },
-      { name: "Air Conditioning", icon: icons.s8 },
-      { name: "Transmission Repair", icon: icons.s9 }
-    ].map((service, index) => (
-      <TouchableOpacity
-        key={index}
-        onPress={navigateToServices}
-        style={{
-          width: "30%", // Adjusted width to fit 3 items per row
-          padding: 10,
-          marginBottom: 16,
-          backgroundColor: "#FFF",
-          borderRadius: 8,
-          shadowColor: "#D3D3D3",
-          elevation: 2,
-          alignItems: "center",
-        }}
-      >
-        <Image source={service.icon} style={{ width: 36, height: 36, marginBottom: 6 }} />
-        <Text style={{ fontSize: 12, color: "#888", textAlign: "center" }}>
-          {service.name}
-        </Text>
-      </TouchableOpacity>
-    ))}
-  </View>
+  {/* Parts Button */}
+  <TouchableOpacity
+    onPress={navigateToParts}
+    style={{
+      width: '45%',
+      backgroundColor: '#fff',
+      padding: 30,
+      marginLeft:5,
+      borderRadius: 8,
+      elevation:1,
+      flexDirection: 'column',  // Changed from row to column
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <Image
+      source={{ uri: partsIconUrl }}
+      style={{ width: 50, height: 50, marginBottom: 10 }}  // Added marginBottom to space between icon and text
+    />
+    <Text style={{ fontSize: 16, color: '#000', fontWeight: '600' }}>Parts</Text>
+  </TouchableOpacity>
+</View>
 
   {/* Divider Line */}
   <View style={{
@@ -278,71 +301,48 @@ const Home: React.FC = () => {
     marginVertical: 20
   }} />
 
-  {/* Modification Services Subsection */}
-  <Text style={{ fontSize: 18, fontWeight: "600", marginBottom: 10 }}>Modification Services</Text>
-  <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-    {[{ name: "Custom Exhaust", icon: icons.s10 },
-      { name: "Body Kits", icon: icons.s11 },
-      { name: "Performance Tuning", icon: icons.s12 },
-      { name: "Spoilers", icon: icons.s13 },
-    ].map((service, index) => (
-      <TouchableOpacity
-        key={index}
-        onPress={navigateToServices}
-        style={{
-          width: "30%", // Adjusted width for the sub-section too
-          padding: 10,
-          marginBottom: 16,
-          backgroundColor: "#FFF",
-          borderRadius: 8,
-          shadowColor: "#D3D3D3",
-          elevation: 2,
-          alignItems: "center",
-        }}
-      >
-        <Image source={service.icon} style={{ width: 36, height: 36, marginBottom: 6 }} />
-        <Text style={{ fontSize: 12, color: "#888", textAlign: "center" }}>
-          {service.name}
-        </Text>
-      </TouchableOpacity>
-    ))}
-  </View>
+  {/* Modification Services */}
+  <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 10 }}>
+        Modification Services
+      </Text>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        {[
+          { name: "Custom Exhaust", icon: icons.s10 },
+          { name: "Body Kits", icon: icons.s11 },
+          { name: "Performance Tuning", icon: icons.s12 },
+          { name: "Spoilers", icon: icons.s13 },
+        ].map((service, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={navigateToServices}
+            style={{
+              width: '48%', // Adjusted width for a 2x2 grid
+              padding: 40,
+              marginBottom: 16,
+              backgroundColor: '#FFF',
+              borderRadius: 8,
+              shadowColor: '#D3D3D3',
+              elevation: 2,
+              alignItems: 'center',
+            }}
+          >
+            <Image source={service.icon} style={{ width: 36, height: 36, marginBottom: 6 }} />
+            <Text style={{ fontSize: 12, color: '#888', textAlign: 'center' }}>
+              {service.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <View>
+        <Slider/>
+      </View>
 </View>
-
 
             {/* Subscription card */}
             <View>
               <Subscription/>
             </View>
-<ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 24 }}>
-  
-        {/* Product Section */}
-        <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 16 }}>
-          Accessories & Products
-        </Text>
-        <View style={{ flexDirection: "column" }}>
-          {/* First Product */}
-          <TouchableOpacity onPress={handleAddToCart}>
-            <View style={{ flexDirection: "row", padding: 16, marginBottom: 16, backgroundColor: "#f9f9f9", borderRadius: 8, elevation:2 }}>
-              <Image source={images.engine_oil} style={{ width: 80, height: 80 }} />
-              <View style={{ flex: 1, marginLeft: 10 }}>
-              <Text style={{ fontSize: 16 }}>Engine Oils</Text>
-              <Text style={{ fontSize: 12, color: "#888", marginTop: 4 }}>Vj0v5UqBQWY2ABJPIDMmSYJCEG8LMxLsOROinqFCqeoM6vCdGtRbma7MfXuRW1NvJHC6smC2AVRZRoP69T14yMmZ1HmFNLz2Zyi</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          {/* Second Product */}
-          <TouchableOpacity onPress={handleAddToCart}>
-            <View style={{ flexDirection: "row", padding: 16, marginBottom: 16, backgroundColor: "#f9f9f9", borderRadius: 8, elevation:2 }}>
-              <Image source={images.battery} style={{ width: 80, height: 80 }} />
-              <View style={{ flex: 1, marginLeft: 10 }}>
-              <Text style={{ fontSize: 16 }}>Car Battery</Text>
-              <Text style={{ fontSize: 12, color: "#888", marginTop: 4 }}>Vj0v5UqBQWY2ABJPIDMmSYJCEG8LMxLsOROinqFCqeoM6vCdGtRbma7MfXuRW1NvJHC6smC2AVRZRoP69T14yMmZ1HmFNLz2Zyi</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 24 }}>
         {/* top rated vendors */}
         <View>
           <VendorList/>

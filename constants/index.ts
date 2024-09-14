@@ -36,6 +36,9 @@ import store from "@/assets/icons/store.png";
 import left from "@/assets/icons/left.png";
 import right from "@/assets/icons/right.png";
 import bell from "@/assets/icons/bell.png";
+import csl1 from "@/assets/icons/csl1.png";
+import csl2 from "@/assets/icons/csl2.png";
+import csl3 from "@/assets/icons/csl3.png";
 
 // Importing service icons
 import s1 from "@/assets/icons/s1.png";
@@ -125,6 +128,9 @@ export const icons = {
   left,
   right,
   bell,
+  csl1,
+  csl2,
+  csl3,
 };
 
 export const onboarding = [

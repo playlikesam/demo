@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Image, FlatList, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, FlatList, Image, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { icons } from "@/constants";  // Import the icons that include the images
 
 const { width } = Dimensions.get('window');
 
 const data = [
-    { id: '1', image: 'https://images.unsplash.com/photo-1636761358783-209512dccd98?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fG1lY2hhbmljfGVufDB8fDB8fHww' },
-    { id: '2', image: 'https://images.unsplash.com/photo-1636761358757-0a616eb9e17e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fG1lY2hhbmljfGVufDB8fDB8fHww' },
-    { id: '3', image: 'https://images.unsplash.com/photo-1599256630445-67b5772b1204?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fG1lY2hhbmljfGVufDB8fDB8fHww' },
+    { id: '1', image: icons.csl1 },  // Reference the icons containing your images
+    { id: '2', image: icons.csl2 },
+    { id: '3', image: icons.csl3 },
 ];
 
 const Carousel = () => {
@@ -20,7 +21,7 @@ const Carousel = () => {
     }).current;
 
     const viewabilityConfig = useRef({
-        viewAreaCoveragePercentThreshold: 50
+        viewAreaCoveragePercentThreshold: 50,
     }).current;
 
     const scrollToIndex = (index: number) => {
@@ -34,8 +35,7 @@ const Carousel = () => {
                 data={data}
                 renderItem={({ item }) => (
                     <View style={styles.item}>
-                        <Image source={{ uri: item.image }} style={styles.image} />
-                        {/* <Text style={styles.title}>{item.title}</Text> */}
+                        <Image source={item.image} style={styles.image} />
                     </View>
                 )}
                 horizontal
@@ -63,16 +63,10 @@ const styles = StyleSheet.create({
     image: {
         width: width * 0.9,  // 90% of the screen width
         height: 200,         // Fixed height for uniformity
-        resizeMode:'cover',  // Ensures the image covers the space and crops the excess
+        resizeMode: 'cover', // Ensures the image covers the space and crops the excess
         borderRadius: 0,     // Rounded corners for aesthetics
-        left:15,
+        left: 15,
     },
-    // title: {
-    //     marginTop: 10,
-    //     fontSize: 18,
-    //     fontWeight: 'bold',
-    //     textAlign: 'center',
-    // },
     tabContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
